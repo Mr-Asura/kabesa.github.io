@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>&lt;/KunwareDev&gt;</title>
+</head>
+<body style="background-image: url(img/bg.jpg);">
+    <script>
+        // Create falling leaves
+        const numberOfLeaves = 10;
+
+        for (let i = 0; i < numberOfLeaves; i++) {
+            createLeaf();
+        }
+
+        function createLeaf() {
+            const leaf = document.createElement("div");
+            leaf.className = "leaf";
+            leaf.style.left = `${Math.random() * 100}vw`;
+            document.body.appendChild(leaf);
+
+            // Set random animation duration for each leaf
+            leaf.style.animation = `falling ${Math.random() * 4 + 4}s linear infinite`;
+
+            // Remove leaf when animation is done
+            leaf.addEventListener("animationend", () => {
+                leaf.remove();
+                createLeaf();
+            });
+        }
+    </script>
+    <div class="container">
+        <p>
+            <span id="currentDay"></span>
+            <script>
+                // Day
+                const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                const currentDayIndex = new Date().getDay();
+                const currentDay = daysOfWeek[currentDayIndex];
+                const currentDayElement = document.getElementById("currentDay");
+                currentDayElement.textContent = currentDay;
+            </script>
+        </p>
+        <p>
+            <span id="currentDate"></span>
+            <script>
+                // Date
+                const currentDate = new Date();
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                const formattedDate = currentDate.toLocaleDateString(undefined, options);
+                const currentDateElement = document.getElementById("currentDate");
+                currentDateElement.textContent = formattedDate;
+            </script>
+        </p>
+    </div>
+    <form action="" method="post">
+        <label for="username">Username</label>
+        <input type="text" id="username">
+        <br>
+        <label for="password">Password</label>
+        <input type="text" id="password">
+        <br>
+        <input type="submit" value="Login">
+    </form>
+
+    <script src="spark.js"></script>
+</body>
+</html>
