@@ -44,7 +44,7 @@ body {
 }
 @keyframes falling {
     to {
-        transform: translateY(100vh) translateX(50vw);
+        transform: translateY(100vh) translateX(-30vw);
     }
 }
 .container {
