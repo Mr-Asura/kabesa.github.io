@@ -1,70 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>&lt;/KunwareDev&gt;</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/font.css">
+  <title>Minecraft: Jump over the Villagers</title>
 </head>
-<body style="background-image: url(img/bg.jpg);">
-    <script>
-        // Create falling leaves
-        const numberOfLeaves = 10;
+<body>
 
-        for (let i = 0; i < numberOfLeaves; i++) {
-            createLeaf();
-        }
 
-        function createLeaf() {
-            const leaf = document.createElement("div");
-            leaf.className = "leaf";
-            leaf.style.left = `${Math.random() * 100}vw`;
-            document.body.appendChild(leaf);
-
-            // Set random animation duration for each leaf
-            leaf.style.animation = `falling ${Math.random() * 4 + 4}s linear infinite`;
-
-            // Remove leaf when animation is done
-            leaf.addEventListener("animationend", () => {
-                leaf.remove();
-                createLeaf();
-            });
-        }
-    </script>
-    <div class="container">
-        <p>
-            <span id="currentDay"></span>
-            <script>
-                // Day
-                const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                const currentDayIndex = new Date().getDay();
-                const currentDay = daysOfWeek[currentDayIndex];
-                const currentDayElement = document.getElementById("currentDay");
-                currentDayElement.textContent = currentDay;
-            </script>
-        </p>
-        <p>
-            <span id="currentDate"></span>
-            <script>
-                // Date
-                const currentDate = new Date();
-                const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                const formattedDate = currentDate.toLocaleDateString(undefined, options);
-                const currentDateElement = document.getElementById("currentDate");
-                currentDateElement.textContent = formattedDate;
-            </script>
-        </p>
+  <main class="start-screen">
+    <div class="intro-frame1"></div>
+    <div class="intro-frame2"></div>
+    <div class="title">
+      <div class="char-container">
+        <div class="char-display">
+          <div class="skin-display"></div>
+          <a type="button" id="next">></a>
+        </div>
+      </div>
+      <h1 onclick="titleClicked()">Minecrƒft<span class="skin-title">Click to play</span></h1>
+      <p>Jump over the Villagers Edition</p>
     </div>
-    <form action="" method="post">
-        <label for="username">Username</label>
-        <input type="text" id="username">
-        <br>
-        <label for="password">Password</label>
-        <input type="password" id="password">
-        <br>
-        <input type="submit" value="Login">
-    </form>
+  </main>
 
-    <script src="spark.js"></script>
+
+
+  <div class="container">
+    <h2 class="initialScore" id="initialScore">press space/up to start</h2>
+    <div class="sun"></div>
+    <div class="bg1"></div>
+    <div class="ground"></div>
+    <div class="character"></div>
+    <div class="villager" id="wall"></div>
+    <div class="shadow"></div>
+    <div class="deathscreen">
+      <h1 class="death-title">You died!</h1>
+      <p id="deathMessage">Steve was caught by Villager *glok *glok *glok</p>
+      <p id="deathscore">Score: 0</p>
+      <button id="restartBtn" onclick="respawn()"><p>respawn</p></button>
+      <button id="menuBtn" onclick="reloadPage()"><p>Game menu</p></button>
+    </div>
+  </div>
+
+  <script>
+    function reloadPage() {
+      location.reload();
+    }
+  </script>
+  <script src="script.js"></script>
+  <script src="screen-animation.js"></script>
 </body>
 </html>

@@ -1,116 +1,368 @@
-@font-face {
-    font-family: osake;
-    src: url(fonts/Osake.otf);
-}
-@font-face {
-    font-family: metropolis;
-    src: url(fonts/Metropolis.otf);
-}
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
+
 body {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+/* START SCREEN */
+main {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+}
+main.active {
+    opacity: 0;
+    transition: 5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.intro-frame1 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: url('img/sando\ 1.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    display: flex;
+    transform:translateX(0%);
+}
+.intro-frame1.active {
+    transform: translateX(-100%);
+    transition: 5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.intro-frame2 {
+    position: absolute;
+    width: 100%;
+    height: 105%;
+    right: 0;
+    bottom: 0;
+    background: url('img/sando\ 2.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: translateX(0%);
+}
+.intro-frame2.active {
+    transform: translateX(100%);
+    transition: 5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.title {
+    position: absolute;
+    width: auto;
+    height: auto;
+    color: white;
+    font-size: 50px;
+    display: inherit;
     flex-direction: column;
     align-items: center;
-    color: white;
-    font-family: metropolis;
-    animation: op 0.5s linear;
-    overflow: hidden;
+    text-shadow:
+        -2px -2px 0 #979797,  
+         2px -2px 0 #979797,
+        -2px  2px 0 #979797,
+         2px  2px 0 #979797;
+    cursor: pointer;
+    transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-.spark {
+.title h1 {
+    color: goldenrod;
+    text-shadow:
+        -2px -2px 0 white,  
+         2px -2px 0 white,
+        -2px  2px 0 white,
+         2px  2px 0 white;
+    transition: 1s ease;
+    z-index: 2;
+}
+.title h1:hover {
+    color: #f7b614;
+    transition: 1s ease;
+}
+.title h1 span {
     position: absolute;
-    width: 30px;
-    height: 8px;
-    border-radius: 3px;
-    background-color: white;
-    transform: none;
+    right: 0;
+    font-family: minecraft;
+    font-size: 20px;
+    font-weight: normal;
+    text-shadow:
+        -1px -1px 0 979797,  
+         1px -1px 0 979797,
+        -1px  1px 0 979797,
+         1px  1px 0 979797;
 }
-.leaf {
-    position: absolute;
-    width: 10px;
-    height: 7px;
-    background-color: #e67300;
-    border-radius: 50%;
-    opacity: 0.8;
+.title p {
+    font-size: 34px;
 }
-@keyframes falling {
-    to {
-        transform: translateY(100vh) translateX(-30vw);
+
+.char-container {
+    position: relative;
+    width: 550px;
+    height: 150px;
+    z-index: 1;
+    transform: translateY(15px);
+    display: flex;
+    align-items: end;
+}
+
+.char-display {
+    display: flex;
+    align-items: end;
+}
+
+.skin-display {
+    width: 200px;
+    height: 200px;
+    background: url('img/steve/1.png');
+    background-position: center;
+    background-size: cover;
+    transition: 0.5s;
+    margin-bottom: -45px;
+}
+
+.char-container a {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    color: #fff;
+}
+.char-container #next {
+    margin-bottom: 20px;
+    margin-left: 0;
+    font-size: 40px;
+    font-family: minecraft;
+    transform: translateY(-30px);
+    animation: nextAnim 1s alternate infinite ease-in-out;
+}
+@keyframes nextAnim {
+    from {
+        margin-left: 0;
+    } to {
+        margin-left: 10px;
     }
 }
-.container {
-    margin-top: 50px;
+
+.skin-selection {
+    width: 600px;
+    height: 200px;
+    background: #fff;
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-shadow: none;
+}
+.skin-selection p {
+    position: absolute;
+    top: 20px;
+    color: black;
+    font-size: 22px;
+}
+.char-selector {
+    display: flex;
+    width: max-content;
+}
+
+/* GAME PANEL */
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #fff, #fffab8, #fffab8);
+    display: flex;
+    flex-direction: column-reverse;
+    overflow: hidden;
+    align-items: center;
+}
+
+.initialScore {
+    position: absolute;
+    top: 15px;
+    left: 30px;
+}
+
+.ground {
+    position: absolute;
+    transform: translateY(15px);
+    width: 2400px;
+    height: 205px;
+    left: 0;
+    background: url('img/dessert_ground.png') repeat-x;
+}
+
+.bg1 {
+    position: absolute;
+    transform: translateY(-23px);
+    width: 16304px;
+    height: 250px;
+    left: 0;
+    background: url('img/dessertBg.png') repeat-x;
+}
+
+.sun {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    top: 50px;
+    transform: translateX(300px) rotate(45deg);
+    background: url('img/sun.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.character {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    left: 100px;
+    background: url('img/steve/1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: translateY(-20px);
+}
+.character.intro {
+    animation: entrance 1.5s linear;
+}
+@keyframes entrance {
+    from {
+        transform: translateY(-20px) translateX(0px);
+    } to {
+        transform: translateY(-20px) translateX(70px);
+    }
+}
+.character.jump {
+    animation: jumpAnim1 1.5s cubic-bezier(0.33, 0, 0.67, 1);
+}
+@keyframes jumpAnim1 {
+    0%,100% {
+      bottom: 0;
+    } 45%, 55% {
+      bottom: 140px;
+    }
+}
+
+.shadow {
+    position: absolute;
+    left: 15px;
+    width: 70px;
+    height: 20px;
+    left: 0;
+    bottom: 20px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 50%;
+    transform: translateX(115px);
+}
+
+.villager {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    bottom: 20px;
+    right: -15%;
+    background: url('img/villager/1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.villager::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    width: 70px;
+    height: 20px;
+    bottom: 0px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 50%;
+}
+
+.deathscreen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(rgba(0, 0, 0, 0.8), rgba(102, 0, 0, 0.8));
+    display: none;
     flex-direction: column;
     align-items: center;
-    z-index: 1;
+    justify-content: center;
+    color: white;
+    gap: 7px;
+    opacity: 0;
+}
+.deathscreen.active {
+    display: flex;
     opacity: 1;
 }
-@keyframes op {
-    from {
-        opacity: 0;
-    }
+
+.death-title {
+    font-size: 55px;
+    margin-bottom: 5px;
 }
-#currentDay {
-    color: #fff;
-    font-family: osake;
-    font-size: 65px;
+
+.deathscreen p {
+    color: #bbbbbb;
 }
-#currentDate {
-    color: #d0d0d0;
+
+#deathscore {
+    color: #bbbbbb;
 }
-#currentDay, #currentDate {
-    text-transform: uppercase;
-    cursor: default;
-}
-header {
-    margin-top: 20px;
-    display: flex;
-}
-.logo {
-    font-family: 'Courier New', Courier, monospace;
-}
-form {
-    position: absolute;
-    bottom: 50px;
-    width: 300px;
-    min-height: 300px;
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-}
-input {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 5px;
-    border: 1.5px solid #f87032;
-    box-shadow: 3px 3px 1px #f87032;
-    font-family: inherit;
-}
-input:focus {
-    outline: none;
-    box-shadow: 3px 3px 1px #f87032,
-                0 0 20px #fff;
-}
-input[type=submit] {
-    background: #ef6220;
-    color: white;
-    border: 1px solid white;
-    /* backdrop-filter: blur(5px); */
+
+.deathscreen button:hover {
     cursor: pointer;
-    box-shadow: 3px 3px 1px #fff;
-    font-family: inherit;
-    transition: 0.2s ease;
+    outline: 2px solid white;
 }
-input[type=submit]:hover {
-    transform: translateY(-5px);
+
+#restartBtn {
+    width: 360px;
+    height: 45px;
+    background: goldenrod;
+    border: none;
+    border-radius: 2px;
+    border-bottom: 5px solid rgb(196, 146, 22);
+    box-shadow: inset 0px 0px 10px gold;
+    margin-top: 75px;
+}
+#restartBtn p {
+    color: #fff;
+    font-family: minecraft-ten;
+    font-weight: 100;
+    font-size: 20px;
+    text-shadow: 0px 3px 2px #333;
+    transform: translateY(-4px);
+}
+
+#menuBtn {
+    width: 360px;
+    height: 45px;
+    background: #d0d2d6;
+    border: none;
+    border-radius: 2px;
+    border-bottom: 5px solid #919191;
+    box-shadow: inset 0px 0px 10px #ffffff;
+}
+#menuBtn p {
+    color: #444;
+    font-family: minecraft;
+    font-weight: 100;
+    font-size: 16px;
 }
